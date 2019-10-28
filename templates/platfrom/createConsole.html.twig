@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajout d'une Console{% endblock %}
+{% block body %}
+    <h1 align="center">Ajout d'une Console</h1>
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary" type="submit" >Créer</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

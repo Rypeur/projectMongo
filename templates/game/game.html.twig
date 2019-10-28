@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block title %}Page de Recherche{% endblock %}
+{% set token = csrf_token('JEU_DELETE') %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Liste de mes Jeux</h1>
+        <h6 class="text-center"><a href="{{ path('app_game_create') }}">
+                <button class="btn-primary ">Ajouter</button>
+            </a></h6>
+        <div class="row">
+
+            <div class="col-lg-3">
+
+                <h1 class="my-4">Catégorie</h1>
+                <div class="list-group">
+                    <a href="{{ path('app_console_index') }}" class="list-group-item">Consoles</a>
+                    <a href="{{ path('app_game_index') }}" class="list-group-item">Jeux</a>
+                    <a href="{{ path('app_book_index') }}" class="list-group-item">Livres</a>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button class="btn btn-block" type="submit">Search</button>
+                    {{ form_end(form) }}
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-7">
+
+                <div class="row">
+                    {% for jeu in jeux %}
+                        {% if app.user.email == jeu.user.email %}
+                            <div class="col-lg-4 text-center">
+                                <div class="card h-100">
+                                    <h6>Annonce N° {{ jeu.id }}</h6>
+                                    <img class="card-img-top" src="{{ jeu.picture }}" alt=""></a>
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            {{ jeu.name }}
+                                        </h4>
+                                        {% for genre in jeu.genres %}
+                                            <h3 class="card-text">{{ genre.name }}</h3>
+                                        {% endfor %}
+                                        <h5>{{ jeu.price }} Euros</h5>
+                                        <p class="card-text">{{ jeu.description }}</p>
+                                        <h6>Vendeur :</h6>
+                                        <p class="card-text">{{ jeu.user.lastName }} {{ jeu.user.firstName }}</p>
+                                        <p class="card-text">{{ jeu.user.email }}</p>
+
+
+                                        <a href="{{ path('app_game_update',{id:jeu.id}) }}">
+                                            <button class="btn-info btn-block">Modifier</button>
+                                        </a>
+                                        <a href="{{ path('app_game_delete',{id:jeu.id}) }}">
+                                            <button class="btn-danger btn-block">Supprimer</button>
+                                        </a>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

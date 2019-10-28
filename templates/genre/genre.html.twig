@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Affichage Genre{% endblock %}
+
+{% block body %}
+    {% set token = csrf_token('GENRE_DELETE') %}
+    <h1 align="center">Listes des Genres</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <h1 class="my-4">Catégorie</h1>
+                <div class="list-group">
+                    <a href="{{ path('app_console_index') }}" class="list-group-item">Consoles</a>
+                    <a href="{{ path('app_game_index') }}" class="list-group-item">Jeux</a>
+                    <a href="{{ path('app_book_index') }}" class="list-group-item">Livres</a>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button class="btn btn-block" type="submit">Search</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <div class="table-responsive col-lg-9 mt-xl-auto">
+                <div class="table-bordered ">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr class="table">
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th colspan="2">
+                                <a href="{{ path('app_genre_create') }}">
+                                    <button type="button" class="btn btn-block btn-success">
+                                        Créer
+                                    </button>
+                                </a>
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for genre in genres %}
+                        <tr class="table">
+                            <td>{{ genre.name }}</td>
+                            <td>
+                                {{ genre.description }}
+
+                            </td>
+                            <td>
+                                <a href="{{ path('app_genre_update',{id:genre.id}) }}">
+                                    <button type="button" class="btn btn-block btn-info">
+                                        Modifier
+                                    </button>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('app_genre_delete',{id:genre.id}) }}">
+                                    <button type="button" class="btn btn-block btn-danger">
+                                        Supprimer
+                                    </button>
+                                </a>
+                            </td>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
