@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block title %}Console N°{{ console.id }}{% endblock %}
+{% set token = csrf_token('CONSOLE_DELETE') %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">{{ console.name }}</h1>
+        <h6 class="text-center"><a href="{{ path('app_console_create') }}">
+                <button class="btn-primary ">Ajouter</button>
+            </a></h6>
+        <div class="row">
+
+            <div class="col-lg-3">
+
+                <h1 class="my-4">Catégorie</h1>
+                <div class="list-group">
+                    <a href="{{ path('app_console_index') }}" class="list-group-item">Consoles</a>
+                    <a href="{{ path('app_game_index') }}" class="list-group-item">Jeux</a>
+                    <a href="{{ path('app_book_index') }}" class="list-group-item">Livres</a>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button class="btn btn-block" type="submit">Search</button>
+                    {{ form_end(form) }}
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-9">
+
+                <div class="card mt-4 text-center">
+                    <h6>Annonce N° {{ console.id }}</h6>
+                    <img class="card-img-top img-fluid" src="{{ console.picture }}" alt="">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ console.name }}</h3>
+                        <h4>{{ console.price }} Euros</h4>
+                        <p class="card-text">{{ console.description }}</p>
+                        <h6>Vendeur :</h6>
+                        <p class="card-text">{{ console.user.lastName }} {{ console.user.firstName }}</p>
+                        <p class="card-text">{{ console.user.email }}</p>
+                        {% if app.user.email != console.user.email %}
+                            <a href="{{ path('app_commande_commandeconsole',{id:console.id}) }}">
+                                <button class="btn-success btn-block">Acheter</button>
+                            </a>
+                        {% endif %}
+                        {% if app.user.email == console.user.email %}
+                            <a href="{{ path('app_console_update',{id:console.id}) }}">
+                                <button class="btn-info ">Modifier</button>
+                            </a>
+                            <a href="{{ path('app_console_delete',{id:console.id}) }}">
+                                <button class="btn-danger ">Supprimer</button>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
